@@ -6504,8 +6504,6 @@ in {
     inherit (pkgs.buildPackages) meson;
   };
 
-  pycallgraph = callPackage ../development/python-modules/pycallgraph { };
-
   py = callPackage ../development/python-modules/py { };
 
   pycangjie = callPackage ../development/python-modules/pycangjie { };
