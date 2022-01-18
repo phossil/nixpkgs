@@ -23,7 +23,7 @@ buildPythonPackage rec {
     owner = "ikalchev";
     repo = "HAP-python";
     rev = "v${version}";
-    sha256 = "0h458hk85kdkj34b3k2gmhn102gzbff9wj0h64q5dq0ldvcqha3m";
+    sha256 = "sha256-dSiI2W4U4FYwMRBInpxb/wkQLKxPzLHIkLPNgiZEhUA=";
   };
 
   propagatedBuildInputs = [

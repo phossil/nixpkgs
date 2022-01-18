@@ -27,9 +27,12 @@ buildPythonPackage rec {
     sha256 = "0pi4c78vqhy7mh9ranssdxdjbqnvyagsfkx95k93bnvzgmnr2kxb";
   };
 
-  patches = [
-    ./relax-deps.patch
-  ];
+  postPatch = ''
+    substituteInPlace pyproject.toml \
+      --replace 'rich = "^10.7.0"' 'rich = ">=10.7.0"' \
+      --replace 'PyYAML = "^5.4.1"' 'PyYAML = ">=5.4.1"' \
+      --replace 'optax = "^0.0.9"' 'optax = ">=0.0.9"'
+  '';
 
   nativeBuildInputs = [
     poetry-core
