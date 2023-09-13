@@ -11,6 +11,7 @@
 , util-linux
 , check
 , enableStatic ? stdenv.hostPlatform.isStatic
+, hurd ? null
 }:
 
 stdenv.mkDerivation rec {
@@ -31,7 +32,8 @@ stdenv.mkDerivation rec {
   buildInputs = [ libuuid ]
     ++ lib.optional (readline != null) readline
     ++ lib.optional (gettext != null) gettext
-    ++ lib.optional (lvm2 != null) lvm2;
+    ++ lib.optional (lvm2 != null) lvm2
+    ++ lib.optional (hurd != null) hurd;
 
   configureFlags =
        (if (readline != null)

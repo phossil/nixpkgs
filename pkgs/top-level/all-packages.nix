@@ -11828,7 +11828,7 @@ with pkgs;
 
   patchutils_0_4_2 = callPackage ../tools/text/patchutils/0.4.2.nix { };
 
-  parted = callPackage ../tools/misc/parted { };
+  parted = callPackage ../tools/misc/parted { hurd = null; };
 
   passh = callPackage ../tools/networking/passh { };
 
@@ -11875,6 +11875,24 @@ with pkgs;
   pngloss = callPackage ../tools/graphics/pngloss { };
 
   pngout = callPackage ../tools/graphics/pngout { };
+
+  hurdPartedCross =
+    if targetPlatform != buildPlatform && targetPlatform.config == "i586-pc-gnu"
+    then (makeOverridable
+            ({ hurd }:
+              (parted.override {
+                # Needs the Hurd's libstore.
+                inherit hurd;
+
+                # The Hurd wants a libparted.a.
+                enableStatic = true;
+
+                gettext = null;
+                readline = null;
+                devicemapper = null;
+              }).crossDrv)
+           { hurd = gnu.hurdCrossIntermediate; })
+    else null;
 
   patch = gnupatch;
 
@@ -20502,6 +20520,8 @@ with pkgs;
 
   gdb = callPackage ../development/tools/misc/gdb {
     guile = null;
+    hurd = gnu.hurdCross;
+    inherit (gnu) mig;
   };
 
   gdbHostCpuOnly = gdb.override { hostCpuOnly = true; };
@@ -28036,7 +28056,22 @@ with pkgs;
 
   libossp_uuid = callPackage ../development/libraries/libossp-uuid { };
 
-  libuuid = if stdenv.isLinux
+  libuuid =
+    if targetPlatform != buildPlatform && targetPlatform.config == "i586-pc-gnu"
+    then (utillinuxMinimal // {
+      crossDrv = lib.overrideDerivation utillinuxMinimal.crossDrv (args: {
+        # `libblkid' fails to build on GNU/Hurd.
+        configureFlags = args.configureFlags
+          + " --disable-libblkid --disable-mount --disable-libmount"
+          + " --disable-fsck --enable-static --disable-partx";
+        doCheck = false;
+        CPPFLAGS =                    # ugly hack for ugly software!
+          lib.concatStringsSep " "
+            (map (v: "-D${v}=4096")
+                 [ "PATH_MAX" "MAXPATHLEN" "MAXHOSTNAMELEN" ]);
+      });
+    })
+    else if stdenv.isLinux
     then util-linuxMinimal
     else null;
 
@@ -28137,6 +28172,9 @@ with pkgs;
   };
 
   nmon = callPackage ../os-specific/linux/nmon { };
+
+  # GNU/Hurd core packages.
+  gnu = recurseIntoAttrs (callPackage ../os-specific/gnu { });
 
   hwdata = callPackage ../os-specific/linux/hwdata { };
 

@@ -17,6 +17,9 @@ let
 
     # Genode
     "aarch64-genode" "i686-genode" "x86_64-genode"
+    
+    # Hurd
+    "i686-gnu"
 
     # illumos
     "x86_64-solaris"
