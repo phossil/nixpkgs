@@ -68,7 +68,7 @@ stdenv.mkDerivation ({
 
     license = lib.licenses.gpl2Plus;
 
-    homepage = http://www.gnu.org/software/hurd/;
+    homepage = "http://www.gnu.org/software/hurd/";
 
     maintainers = [ lib.maintainers.ludo ];
   };

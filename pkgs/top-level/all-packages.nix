@@ -11877,7 +11877,7 @@ with pkgs;
   pngout = callPackage ../tools/graphics/pngout { };
 
   hurdPartedCross =
-    if targetPlatform != buildPlatform && targetPlatform.config == "i586-pc-gnu"
+    if stdenv.targetPlatform != stdenv.buildPlatform && stdenv.targetPlatform.config == "i586-pc-gnu"
     then (makeOverridable
             ({ hurd }:
               (parted.override {
@@ -28057,7 +28057,7 @@ with pkgs;
   libossp_uuid = callPackage ../development/libraries/libossp-uuid { };
 
   libuuid =
-    if targetPlatform != buildPlatform && targetPlatform.config == "i586-pc-gnu"
+    if stdenv.targetPlatform != stdenv.buildPlatform && stdenv.targetPlatform.config == "i586-pc-gnu"
     then (utillinuxMinimal // {
       crossDrv = lib.overrideDerivation utillinuxMinimal.crossDrv (args: {
         # `libblkid' fails to build on GNU/Hurd.

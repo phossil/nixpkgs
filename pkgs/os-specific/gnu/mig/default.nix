@@ -42,7 +42,7 @@ stdenv.mkDerivation {
 
     license = lib.licenses.gpl2Plus;
 
-    homepage = http://www.gnu.org/software/hurd/microkernel/mach/mig/gnu_mig.html;
+    homepage = "http://www.gnu.org/software/hurd/microkernel/mach/mig/gnu_mig.html";
 
     # platforms = lib.platforms.gnu ++ lib.platforms.linux;  # really GNU/Hurd
     maintainers = [ lib.maintainers.ludo ];

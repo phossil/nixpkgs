@@ -29,7 +29,7 @@ let
                  "${stdenv.targetPlatform.config}-";
 in
 
-assert targetPlatform.isHurd -> mig != null && hurd != null;
+assert stdenv.targetPlatform.isHurd -> mig != null && hurd != null;
 assert pythonSupport -> python3 != null;
 
 stdenv.mkDerivation rec {
@@ -59,11 +59,11 @@ stdenv.mkDerivation rec {
 
   nativeBuildInputs = [ pkg-config texinfo perl setupDebugInfoDirs ]
     # TODO(@Ericson2314) not sure if should be host or target
-    ++ lib.optional targetPlatform.isHurd mig;
+    ++ lib.optional stdenv.targetPlatform.isHurd mig;
 
   buildInputs = [ ncurses readline gmp mpfr expat libipt zlib zstd guile sourceHighlight ]
     ++ lib.optional pythonSupport python3
-    ++ lib.optional targetPlatform.isHurd hurd
+    ++ lib.optional stdenv.targetPlatform.isHurd hurd
     ++ lib.optional doCheck dejagnu
     ++ lib.optional enableDebuginfod (elfutils.override { enableDebuginfod = true; })
     ++ lib.optional stdenv.isDarwin libiconv;
