@@ -68,6 +68,7 @@ rec {
         else if final.isFreeBSD             then "fblibc"
         else if final.isNetBSD              then "nblibc"
         else if final.isAvr                 then "avrlibc"
+        else if final.isHurd                then "glibc"
         else if final.isGhcjs               then null
         else if final.isNone                then "newlib"
         # TODO(@Ericson2314) think more about other operating systems
@@ -118,6 +119,7 @@ rec {
           wasi = "Wasi";
           redox = "Redox";
           genode = "Genode";
+          hurd = "GNU";
         }.${final.parsed.kernel.name} or null;
 
          # uname -m

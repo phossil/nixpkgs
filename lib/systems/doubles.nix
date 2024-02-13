@@ -19,7 +19,7 @@ let
     "aarch64-genode" "i686-genode" "x86_64-genode"
     
     # Hurd
-    "i686-gnu"
+    "i686-hurd" "x86_64-hurd"
 
     # illumos
     "x86_64-solaris"
@@ -115,6 +115,7 @@ in {
   redox         = filterDoubles predicates.isRedox;
   windows       = filterDoubles predicates.isWindows;
   genode        = filterDoubles predicates.isGenode;
+  hurd          = filterDoubles predicates.isHurd;
 
   embedded      = filterDoubles predicates.isNone;
 
