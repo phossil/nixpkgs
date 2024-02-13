@@ -89,7 +89,7 @@ let
 
     mig = callPackage ./mig {
       # Build natively, but force use of a 32-bit environment because we're
-      # targeting `i586-pc-gnu'.
+      # targeting `i686-pc-gnu'.
       stdenv = pkgsi686Linux.stdenv;
     };
 

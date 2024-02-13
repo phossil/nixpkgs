@@ -15,11 +15,11 @@ stdenv.mkDerivation rec {
 
   patchPhase =
     '' sed -i "Makefile" \
-           -e 's|gcc|i586-pc-gnu-gcc|g ;
+           -e 's|gcc|i686-pc-gnu-gcc|g ;
                s|-std=gnu99|-std=gnu99 -fgnu89-inline|g'
     '';
 
-  makeFlags = [ "CC=i586-pc-gnu-gcc" ];
+  makeFlags = [ "CC=i686-pc-gnu-gcc" ];
   buildInputs = [ hurd machHeaders ];
   nativeBuildInputs = [ mig ];
 

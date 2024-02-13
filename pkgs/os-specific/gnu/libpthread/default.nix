@@ -42,7 +42,7 @@ stdenv.mkDerivation ({
 (if headersOnly
  then {
    configureFlags =
-     [ "--build=i586-pc-gnu"
+     [ "--build=i686-pc-gnu"
        "ac_cv_lib_ihash_hurd_ihash_create=yes"
      ];
 

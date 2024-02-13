@@ -35,7 +35,7 @@ stdenv.mkDerivation ({
 
   propagatedBuildInputs = [ machHeaders ];
 
-  configureFlags = lib.optionals headersOnly [ "--build=i586-pc-gnu" ]
+  configureFlags = lib.optionals headersOnly [ "--build=i686-pc-gnu" ]
     ++ (if hurdPartedCross != null
         then [ "--with-parted" ]
         else [ "--without-parted" ]);

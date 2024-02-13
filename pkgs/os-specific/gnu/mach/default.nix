@@ -17,7 +17,7 @@ stdenv.mkDerivation ({
   };
 
   configureFlags =
-       lib.optional headersOnly "--build=i586-pc-gnu"  # cheat
+       lib.optional headersOnly "--build=i686-pc-gnu"  # cheat
 
     # Always enable dependency tracking.  See
     # <http://lists.gnu.org/archive/html/bug-hurd/2010-05/msg00137.html>.
@@ -46,7 +46,7 @@ stdenv.mkDerivation ({
     homepage = "http://www.gnu.org/software/hurd/microkernel/mach/gnumach.html";
 
     maintainers = [ lib.maintainers.ludo ];
-    platforms = [ "i586-gnu" ];
+    platforms = [ "i686-gnu" ];
   };
 }
 
