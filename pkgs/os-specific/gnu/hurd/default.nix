@@ -76,16 +76,25 @@ stdenv.mkDerivation ({
 
 //
 
-lib.optionalAttrs (!headersOnly && buildTarget != null) {
-  # Use the default `buildPhase' and `installPhase' so that the usual hooks
-  # can still be used.
-  buildFlags = buildTarget;
-  installTargets = assert installTarget != null; installTarget;
-}
+(if !headersOnly && buildTarget != null
+ then assert installTarget != null; {
+   # Use the default `buildPhase' and `installPhase' so that the usual hooks
+   # can still be used.
+   buildFlags = buildTarget;
+   installTargets = installTarget;
+ }
+ else {})
 
 //
 
-lib.optionalAttrs headersOnly {
-  dontBuild = true;
-  installPhase = "make install-headers";
-})
+(if headersOnly
+ then { dontBuild = true; installPhase = "make install-headers"; }
+ else (if (cross != null)
+       then {
+         crossConfig = cross.config;
+
+         # The `configure' script wants to build executables so tell it where
+         # to find `crt1.o' et al.
+         LDFLAGS = "-B${glibcCross}/lib";
+       }
+       else { })))
